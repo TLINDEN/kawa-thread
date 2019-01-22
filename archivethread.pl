@@ -69,8 +69,18 @@ foreach my $page (1 .. $lastpage) {
   # remove extranous whitespace
   $content =~ s/^\s*$//gm;
 
+  # remove unneeded divs
+  $content =~ s/<div class="(avatarHolder|editDate|publicControls|attachmentInfo pairsJustified|extraUserInfo|likesSummary secondaryContent|baseHtml signature messageText ugc)">.+?<\/div>//gs;
+
+  # remove img smilies
+  $content =~ s/<img src="(proxy.php|styles).+?\/>//gs;
+
+  # remove melden link, it's inside the date div, so remove it directly
+  $content =~ s/<a href="posts\/\d+?\/report".+?Melden<\/a>//gs;
+
   # Download linked image and embed it directly:
   $content =~ s/(<a href=.+?<\/a>)/imager($1)/seg;
+  $content =~ s/(<img src=.+?\/>)/imager($1)/seg;
 
   # save
   print $index $content;
@@ -105,10 +115,14 @@ sub imager {
     my $img    = $imguri;
     $img =~ s/\/$//;
     $img =~ s/.*\///;
+    $img =~ s/\.//g;
 
     my $suffix = 'jpg';
     if ($img =~ /png/) {
       $suffix = 'png';
+    }
+    elsif ($img =~ /gif/) {
+      $suffix = 'gif';
     }
     $img = "${img}.${suffix}";
 
