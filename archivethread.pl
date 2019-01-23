@@ -109,7 +109,7 @@ sub imager {
   # turn to oneliner
   $html =~ s/\R//gs;
 
-  if ($html =~ /(attachments\/.+?\/)/) {
+  if ($html =~ /(attachments\/.+?\/)/ || $html =~ /(media\/.+?\/full)/) {
     # embedded or attached attachment
     my $imguri = $1;
     my $img    = $imguri;
