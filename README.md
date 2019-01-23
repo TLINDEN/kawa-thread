@@ -33,7 +33,12 @@ Das Tool erzeugt pro Seite eine HTML-Datei (seite.html) und eine grosse Datei na
 
 # Weiterverarbeitung
 
-Die index.html samt den eingebetteten Bildern kann dann mit einem geeigneten Tool zu PDF konvertiert werden.
+Die index.html samt den eingebetteten Bildern kann dann mit einem geeigneten Tool zu PDF konvertiert werden. Zu empfehlen ist [Pandoc](https://pandoc.org/):
+
+    pandoc -r html -w latex --latex-engine=xelatex -o ausbau.pdf index.html 
+    
+Neben Pandox muss XeTeX installiert sein.
+
 
 # Lizenz und Copyright
 
